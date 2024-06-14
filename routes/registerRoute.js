@@ -22,7 +22,7 @@ router.post('/register', celebrate({ [Segments.BODY]: userSchema }), (req, res) 
         if (result && result.success) {
             res.status(201).json({ message: result.message, userId: result.userId });
         } else if (result) {
-            res.status(400).json(result.message);
+            res.status(400).json({ message: result.message });
         } else {
             res.status(500).json({ message: 'Internal server error.' });
         }

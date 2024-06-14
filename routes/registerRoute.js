@@ -16,9 +16,9 @@ const userSchema = Joi.object({
     sex: Joi.string().valid('Male', 'Female', 'Other').required()
 });
 
-router.post('/register', celebrate({ [Segments.BODY]: userSchema }), (req, res) => {
+router.post('/register', celebrate({ [Segments.BODY]: userSchema }), async (req, res) => {
     try {
-        const result = userService.registerUser(req.body);
+        const result = await userService.registerUser(req.body);
         if (result && result.success) {
             res.status(201).json({ message: result.message, userId: result.userId });
         } else if (result) {

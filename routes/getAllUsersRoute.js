@@ -1,11 +1,14 @@
 const express = require('express');
+const router = express.Router();
 const userService = require('../services/userService');
 
-const router = express.Router();
-
-router.get('/', (req, res) => {
-    const users = userService.getAllUsers();
-    res.status(200).json(users);
+router.get('/', async (req, res) => {
+    try {
+        const users = await userService.getAllUsers();
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error.' });
+    }
 });
 
 module.exports = router;

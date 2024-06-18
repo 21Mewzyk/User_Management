@@ -1,6 +1,6 @@
 const express = require('express');
 const { celebrate, Segments, Joi } = require('celebrate');
-const userService = require('../services/userService');
+const { registerUser } = require('../controllers/registerController'); // Correct path
 
 const router = express.Router();
 
@@ -16,20 +16,6 @@ const userSchema = Joi.object({
     sex: Joi.string().valid('Male', 'Female', 'Other').required()
 });
 
-router.post('/register', celebrate({ [Segments.BODY]: userSchema }), async (req, res) => {
-    try {
-        const result = await userService.registerUser(req.body);
-        if (result && result.success) {
-            res.status(201).json({ message: result.message, userId: result.userId });
-        } else if (result) {
-            res.status(400).json({ message: result.message });
-        } else {
-            res.status(500).json({ message: 'Internal server error.' });
-        }
-    } catch (error) {
-        console.error('Error occurred during registration:', error);
-        res.status(500).json({ message: 'Internal server error.' });
-    }
-});
+router.post('/', celebrate({ [Segments.BODY]: userSchema }), registerUser);
 
 module.exports = router;

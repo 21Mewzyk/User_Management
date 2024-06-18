@@ -7,10 +7,10 @@ const updateUserRoute = require('./updateUserRoute');
 
 const router = express.Router();
 
-router.use(registerRoute);
-router.use(deleteRoute);
-router.use(getUserRoute);
-router.use(getAllUsersRoute);
-router.use(updateUserRoute);
+router.use('/register', registerRoute);
+router.use('/delete', deleteRoute);
+router.use('/get', getUserRoute); // Correct path
+router.use('/getAll', getAllUsersRoute);
+router.use('/update', updateUserRoute);
 
 module.exports = router;

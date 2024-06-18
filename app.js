@@ -1,23 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const sequelize = require('./src/config/database');
+const routes = require('./src/routes');
 const { errors } = require('celebrate');
-
-
-const deleteUserRoute = require('./src/routes/deleteRoute');
-const getUserRoute = require('./src/routes/getUserRoute');
-const getAllUsersRoute = require('./src/routes/getAllUsersRoute');
-const updateUserRoute = require('./src/routes/updateUserRoute');
-const registerRoute = require('./src/routes/registerRoute');
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use('/api', routes);
 
-app.use('/users', registerRoute);
-app.use('/users', deleteUserRoute);
-app.use('/users', getUserRoute);
-app.use('/users', getAllUsersRoute);
-app.use('/users', updateUserRoute);
+sequelize.sync({ force: true }).then(() => {
+    console.log('Database & tables created!');
+}).catch(error => {
+    console.error('Error syncing database:', error);
+});
 
 app.use(errors());
 

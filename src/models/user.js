@@ -4,44 +4,42 @@ const sequelize = require('../config/database');
 const User = sequelize.define('User', {
     id: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
     },
     username: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     firstName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     lastName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     address: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     occupation: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     birthdate: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
     },
     maritalStatus: {
         type: DataTypes.ENUM('Single', 'Married', 'Divorced', 'Widowed'),
-        allowNull: false
+        allowNull: false,
     },
     sex: {
         type: DataTypes.ENUM('Male', 'Female', 'Other'),
-        allowNull: false
+        allowNull: false,
     }
+}, {
+    timestamps: false,  // Ensure timestamps are disabled
 });
-
-sequelize.sync()
-    .then(() => console.log('Database & tables created!'))
-    .catch(err => console.error('Error creating database:', err));
 
 module.exports = User;

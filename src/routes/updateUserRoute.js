@@ -1,6 +1,6 @@
 const express = require('express');
 const { celebrate, Segments, Joi } = require('celebrate');
-const userService = require('../services/userService');
+const { updateUser } = require('../controllers/updateUserController');
 
 const router = express.Router();
 
@@ -16,13 +16,6 @@ const userSchema = Joi.object({
     sex: Joi.string().valid('Male', 'Female', 'Other').required()
 });
 
-router.put('/:id', celebrate({ [Segments.BODY]: userSchema }), (req, res) => {
-    const result = userService.updateUser(req.params.id, req.body);
-    if (result.success) {
-        res.status(200).json(result.message);
-    } else {
-        res.status(404).json(result.message);
-    }
-});
+router.put('/:id', celebrate({ [Segments.BODY]: userSchema }), updateUser);
 
 module.exports = router;

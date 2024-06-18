@@ -2,11 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 
-const registerRoute = require('./routes/registerRoute');
-const deleteUserRoute = require('./routes/deleteRoute');
-const getUserRoute = require('./routes/getUserRoute');
-const getAllUsersRoute = require('./routes/getAllUsersRoute');
-const updateUserRoute = require('./routes/updateUserRoute');
+
+const deleteUserRoute = require('./src/routes/deleteRoute');
+const getUserRoute = require('./src/routes/getUserRoute');
+const getAllUsersRoute = require('./src/routes/getAllUsersRoute');
+const updateUserRoute = require('./src/routes/updateUserRoute');
+const registerRoute = require('./src/routes/registerRoute');
 
 const app = express();
 

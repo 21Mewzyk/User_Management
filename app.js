@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const sequelize = require('./src/config/database');
@@ -9,7 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use('/api', routes);
 
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync().then(() => {
     console.log('Database & tables created!');
 }).catch(error => {
     console.error('Error syncing database:', error);

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUser } = require('../controllers/getUserController'); // Correct path
+const { getUser } = require('../controllers/getUserController');
 const router = express.Router();
 
 router.get('/:id', getUser);

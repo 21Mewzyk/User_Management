@@ -1,6 +1,6 @@
 const express = require('express');
 const { celebrate, Segments, Joi } = require('celebrate');
-const { registerUser } = require('../controllers/registerController'); // Correct path
+const { registerUser } = require('../controllers/registerController');
 
 const router = express.Router();
 

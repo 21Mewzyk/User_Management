@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.use('/register', registerRoute);
 router.use('/delete', deleteRoute);
-router.use('/get', getUserRoute); // Correct path
+router.use('/get', getUserRoute);
 router.use('/getAll', getAllUsersRoute);
 router.use('/update', updateUserRoute);
 

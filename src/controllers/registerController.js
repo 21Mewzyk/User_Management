@@ -1,18 +1,17 @@
 const userService = require('../services/userService');
+const logger = require('../utils/logger');
 
-const registerUser = async (req, res) => {
+const registerUser = async (req, res, next) => {
     try {
         const result = await userService.registerUser(req.body);
-        if (result && result.success) {
+        if (result.success) {
             res.status(201).json({ message: result.message, userId: result.userId });
-        } else if (result) {
-            res.status(400).json({ message: result.message, error: result.error });
         } else {
-            res.status(500).json({ message: 'Internal server error.' });
+            res.status(400).json({ message: result.message });
         }
     } catch (error) {
-        console.error('Error occurred during registration:', error);
-        res.status(500).json({ message: 'Internal server error.', error: error.message });
+        logger.error('Error occurred during registration:', error);
+        next(error);
     }
 };
 

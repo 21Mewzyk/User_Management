@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const sequelize = require('./src/config/database');
-const routes = require('./src/routes');
+const routes = require('./src/routes/apiRoutes'); // Updated to apiRoutes
 const errorHandler = require('./src/middleware/errorHandler');
 const logger = require('./src/utils/logger');
 

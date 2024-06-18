@@ -17,7 +17,7 @@ const userSchema = Joi.object({
     occupation: Joi.string().required(),
     birthdate: Joi.date().iso().required(),
     maritalStatus: Joi.string().valid('Single', 'Married', 'Divorced', 'Widowed').required(),
-    sex: Joi.string().valid('Male', 'Female', 'Other').required()
+    sex: Joi.string().valid('Male', 'Female').required()
 });
 
 router.post('/register', celebrate({ [Segments.BODY]: userSchema }), registerUser);

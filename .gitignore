@@ -11,6 +11,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+#mysql in vscode
+settings.json
+
 # Runtime data
 pids
 *.pid

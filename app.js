@@ -17,7 +17,7 @@ sequelize.sync({ alter: true }).then(() => {
     logger.error('Error syncing database:', error);
 });
 
-app.use(errorHandler);
+app.use(errorHandler); // Use error handling middleware
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -3,10 +3,18 @@ const User = require('../models/user');
 module.exports = {
     registerUser: async (user) => {
         try {
-            const existingUser = await User.findByPk(user.id);
-            if (existingUser) {
+            // Check if a user with the same ID already exists
+            const existingUserById = await User.findByPk(user.id);
+            if (existingUserById) {
                 return { success: false, message: 'User with this ID already exists.' };
             }
+
+            // Check if a user with the same username already exists
+            const existingUserByUsername = await User.findOne({ where: { username: user.username } });
+            if (existingUserByUsername) {
+                return { success: false, message: 'Username already exists.' };
+            }
+
             await User.create(user);
             return { success: true, message: 'User registered successfully.', userId: user.id };
         } catch (error) {
@@ -45,12 +53,21 @@ module.exports = {
     },
     updateUser: async (id, newUser) => {
         try {
-            const result = await User.update(newUser, { where: { id } });
-            if (result[0]) {
-                return { success: true, message: 'User updated successfully.' };
-            } else {
+            const existingUser = await User.findByPk(id);
+            if (!existingUser) {
                 return { success: false, message: 'User not found.' };
             }
+            
+            // Ensure the new username is unique if it's being updated
+            if (newUser.username && newUser.username !== existingUser.username) {
+                const usernameTaken = await User.findOne({ where: { username: newUser.username } });
+                if (usernameTaken) {
+                    return { success: false, message: 'Username already exists.' };
+                }
+            }
+
+            await User.update(newUser, { where: { id } });
+            return { success: true, message: 'User updated successfully.' };
         } catch (error) {
             console.error('Error updating user:', error);
             return { success: false, message: 'Failed to update user', error: error.message };

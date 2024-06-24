@@ -8,15 +8,15 @@ const userSchema = Joi.object({
     lastName: Joi.string().required(),
     address: Joi.string().required(),
     occupation: Joi.string().required(),
-    birthdate: Joi.date().iso().required(),
-    maritalStatus: Joi.string().valid('single', 'married', 'divorced', 'widowed').required(),
-    sex: Joi.string().valid('male', 'female').required(),
+    birthdate: Joi.date().required(),
+    maritalStatus: Joi.string().valid('Single', 'Married', 'Divorced', 'Widowed').required(),
+    sex: Joi.string().valid('Male', 'Female').required(),
     email: Joi.string().email().optional()
 });
 
 const loginSchema = Joi.object({
     username: Joi.string().required(),
-    password: Joi.string().required(),
+    password: Joi.string().required()
 });
 
-module.exports = { userSchema };
+module.exports = { userSchema, loginSchema };

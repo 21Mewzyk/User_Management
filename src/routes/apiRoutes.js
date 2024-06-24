@@ -1,5 +1,11 @@
 const express = require('express');
-const { registerUser, deleteUser, getAllUsers, getUser, updateUser } = require('../controllers/userController');
+const {
+    registerUser,
+    deleteUser,
+    getAllUsers,
+    getUser,
+    updateUser,
+} = require('../controllers/userController'); 
 const validate = require('../middleware/validate');
 const { userSchema } = require('../validation/schemas');
 const normalizeInput = require('../middleware/normalizeInput');

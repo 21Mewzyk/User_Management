@@ -9,6 +9,11 @@ const User = sequelize.define('User', {
     username: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true, 
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     firstName: {
         type: DataTypes.STRING,
@@ -16,26 +21,6 @@ const User = sequelize.define('User', {
     },
     lastName: {
         type: DataTypes.STRING,
-        allowNull: false,
-    },
-    address: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    occupation: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    birthdate: {
-        type: DataTypes.DATE,
-        allowNull: false,
-    },
-    maritalStatus: {
-        type: DataTypes.ENUM('Single', 'Married', 'Divorced', 'Widowed'),
-        allowNull: false,
-    },
-    sex: {
-        type: DataTypes.ENUM('Male', 'Female'),
         allowNull: false,
     }
 }, {

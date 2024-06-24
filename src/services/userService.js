@@ -3,13 +3,11 @@ const User = require('../models/user');
 module.exports = {
     registerUser: async (user) => {
         try {
-            // Check if a user with the same ID already exists
             const existingUserById = await User.findByPk(user.id);
             if (existingUserById) {
                 return { success: false, message: 'User with this ID already exists.' };
             }
 
-            // Check if a user with the same username already exists
             const existingUserByUsername = await User.findOne({ where: { username: user.username } });
             if (existingUserByUsername) {
                 return { success: false, message: 'Username already exists.' };
@@ -58,7 +56,6 @@ module.exports = {
                 return { success: false, message: 'User not found.' };
             }
             
-            // Ensure the new username is unique if it's being updated
             if (newUser.username && newUser.username !== existingUser.username) {
                 const usernameTaken = await User.findOne({ where: { username: newUser.username } });
                 if (usernameTaken) {

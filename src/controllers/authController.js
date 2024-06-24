@@ -2,18 +2,23 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const logger = require('../utils/logger');
+
+// Function to generate JWT token
 const generateToken = (user) => {
     return jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN,
     });
 };
 
+// Signup (Register) function
 const signup = async (req, res) => {
     try {
         const { id, username, password, firstName, lastName, address, occupation, birthdate, maritalStatus, sex, email } = req.body;
 
+        // Hash the password before saving
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // Create new user
         const newUser = await User.create({
             id,
             username,
@@ -28,8 +33,10 @@ const signup = async (req, res) => {
             email
         });
 
+        // Generate token
         const token = generateToken(newUser);
 
+        // Respond with success message and token
         res.status(201).json({ message: 'User registered successfully', token });
     } catch (error) {
         if (error.name === 'SequelizeUniqueConstraintError') {
@@ -41,6 +48,7 @@ const signup = async (req, res) => {
     }
 };
 
+// Login function
 const login = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -58,12 +66,15 @@ const login = async (req, res) => {
             return res.status(401).json({ message: 'Invalid token' });
         }
 
+        // Find user by username
         const user = await User.findOne({ where: { username } });
 
+        // Check if user exists and password matches
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
 
+        // Respond with user details
         res.status(200).json({
             id: user.id,
             username: user.username,

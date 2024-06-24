@@ -6,6 +6,6 @@ const { userSchema, loginSchema } = require('../validation/schemas');
 const router = express.Router();
 
 router.post('/signup', validate(userSchema), signup);
-router.post('/login', validate(loginSchema), login);
+router.post('/login', validate(loginSchema), login); 
 
 module.exports = router;

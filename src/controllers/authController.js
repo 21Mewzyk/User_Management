@@ -74,6 +74,11 @@ const login = async (req, res) => {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
 
+        // Check if the token's user ID matches the found user's ID
+        if (decoded.id !== user.id) {
+            return res.status(401).json({ message: 'Token does not match the user' });
+        }
+
         // Respond with user details
         res.status(200).json({
             id: user.id,

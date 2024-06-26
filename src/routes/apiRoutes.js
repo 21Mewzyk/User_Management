@@ -1,22 +1,15 @@
 const express = require('express');
-const {
-    registerUser,
-    deleteUser,
-    getAllUsers,
-    getUser,
-    updateUser
-} = require('../controllers/user');
-
-const validate = require('../middleware/validate');
-const { userSchema } = require('../validation/schemas');
-const normalizeInput = require('../middleware/normalizeInput');
+const { getUser, getAllUsers, deleteUser, updateUser } = require('../controllers/user/index');
+const verifyToken = require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/register', normalizeInput, validate(userSchema), registerUser);
-router.delete('/delete/:id', deleteUser);
-router.get('/get/:id', getUser);
-router.get('/getAll', getAllUsers);
-router.put('/update/:id', normalizeInput, validate(userSchema), updateUser);
+router.get('/get/:id', verifyToken, getUser);
+router.get('/getAll', verifyToken, getAllUsers);
+router.put('/update/:id', verifyToken, updateUser);
+router.delete('/delete/:id', verifyToken, deleteUser);
+router.get('/protected', verifyToken, (req, res) => {
+    res.status(200).json({ message: 'access granted', user: req.user });
+});
 
 module.exports = router;

@@ -8,8 +8,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-
-// Use the routes
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
 

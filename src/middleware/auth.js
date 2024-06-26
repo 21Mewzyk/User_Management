@@ -15,7 +15,7 @@ const verifyToken = (req, res, next) => {
         decoded.iat = moment.unix(decoded.iat).format('YYYY-MM-DD HH:mm:ss');
         decoded.exp = moment.unix(decoded.exp).format('YYYY-MM-DD HH:mm:ss');
         
-        req.user = decoded; 
+        req.user = decoded;
         next();
     } catch (error) {
         if (error.name === 'TokenExpiredError') {

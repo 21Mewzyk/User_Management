@@ -5,7 +5,7 @@ const {
     getAllUsers,
     getUser,
     updateUser
-} = require('../controllers/user'); // Import from the index file
+} = require('../controllers/user');
 
 const validate = require('../middleware/validate');
 const { userSchema } = require('../validation/schemas');

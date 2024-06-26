@@ -1,6 +1,6 @@
 const User = require('../../models/user');
 const logger = require('../../utils/logger');
-const generateToken = require('../../utils/generateToken'); // Correct import
+const generateToken = require('../../utils/generateToken'); 
 
 const getAllUsers = async (req, res) => {
     try {

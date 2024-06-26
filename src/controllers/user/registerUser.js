@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../../models/user');
 const logger = require('../../utils/logger');
-const generateToken = require('../../utils/generateToken'); // Correct import
 
 const registerUser = async (req, res) => {
     try {
@@ -20,8 +19,8 @@ const registerUser = async (req, res) => {
             sex,
             email
         });
-        const token = generateToken(newUser);
-        res.status(201).json({ message: 'User registered successfully', token });
+
+        res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
         if (error.name === 'SequelizeUniqueConstraintError') {
             res.status(400).json({ message: 'Username already exists' });

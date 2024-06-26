@@ -9,7 +9,7 @@ const updateUser = async (req, res) => {
         const user = await User.findByPk(userId);
         if (user) {
             user.username = username;
-            user.password = await bcrypt.hash(password, 10); // Hash the new password
+            user.password = await bcrypt.hash(password, 10); 
             user.firstName = firstName;
             user.lastName = lastName;
             user.address = address;

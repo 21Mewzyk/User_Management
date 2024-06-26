@@ -5,19 +5,19 @@ const logger = require('../utils/logger');
 const registerUser = require('./user/registerUser');
 const loginUser = require('./user/loginUser');
 
-// Function to generate JWT token
+//Generate JWT token
 const generateToken = (user) => {
     return jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN,
     });
 };
 
-// Signup (Register) function
+// Signup function
 const signup = async (req, res) => {
     try {
         const { id, username, password, firstName, lastName, address, occupation, birthdate, maritalStatus, sex, email } = req.body;
 
-        // Hash the password before saving
+        // Hash Password
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create new user

@@ -9,7 +9,7 @@ const User = sequelize.define('User', {
     username: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: true
     },
     password: {
         type: DataTypes.STRING,
@@ -46,9 +46,19 @@ const User = sequelize.define('User', {
     email: {
         type: DataTypes.STRING,
         allowNull: true,
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
     }
 }, {
-    timestamps: false,
+    timestamps: true,
 });
 
 module.exports = User;

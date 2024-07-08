@@ -16,5 +16,10 @@
     "sequelize": "^6.37.3",
     "uuid": "^10.0.0",
     "winston": "^3.13.0"
-  }
+  },
+  "scripts": {
+    "sync": "node src/config/syncModels.js",
+    "start": "nodemon app.js"
+}
+
 }

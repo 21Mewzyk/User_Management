@@ -5,7 +5,16 @@ const UserData = require('../models/userData');
 // Register User Authentication and Data
 const registerUser = async (req, res) => {
     const { id, username, password, firstName, lastName, address, occupation, birthdate, maritalStatus, sex, email } = req.body;
+    
     try {
+    
+        const existingUserAuth = await UserAuthentication.findOne({ where: { id } });
+        const existingUsername = await UserAuthentication.findOne({ where: { username } });
+        
+        if (existingUserAuth || existingUsername) {
+            return res.status(400).json({ message: 'User exists already' });
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUserAuth = await UserAuthentication.create({
             id,

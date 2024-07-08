@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { format } = require('date-fns');
 const UserAuthentication = require('../models/userAuthentication');
 const UserData = require('../models/userData');
 
@@ -13,8 +14,8 @@ const loginUser = async (req, res) => {
             const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES });
 
             const decodedToken = jwt.decode(token);
-            const issuedAt = new Date(decodedToken.iat * 1000).toISOString();
-            const expiration = new Date(decodedToken.exp * 1000).toISOString();
+            const issuedAt = format(new Date(decodedToken.iat * 1000), 'yyyy-MM-dd HH:mm:ss');
+            const expiration = format(new Date(decodedToken.exp * 1000), 'yyyy-MM-dd HH:mm:ss');
 
             res.status(200).json({
                 message: 'Login successful',

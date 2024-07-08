@@ -1,17 +1,32 @@
-const userService = require('../services/userService');
-const logger = require('../utils/logger');
+const bcrypt = require('bcrypt');
+const UserAuthentication = require('../models/userAuthentication');
+const UserData = require('../models/userData');
 
-const registerUser = async (req, res, next) => {
+// Register User Authentication and Data
+const registerUser = async (req, res) => {
+    const { id, username, password, firstName, lastName, address, occupation, birthdate, maritalStatus, sex, email } = req.body;
     try {
-        const result = await userService.registerUser(req.body);
-        if (result.success) {
-            res.status(201).json({ message: result.message, userId: result.userId });
-        } else {
-            res.status(400).json({ message: result.message });
-        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUserAuth = await UserAuthentication.create({
+            id,
+            username,
+            password: hashedPassword,
+        });
+        const newUserData = await UserData.create({
+            id,
+            firstName,
+            lastName,
+            address,
+            occupation,
+            birthdate,
+            maritalStatus,
+            sex,
+            email,
+        });
+        res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-        logger.error('Error occurred during registration:', error);
-        next(error);
+        console.error('Error during registration:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 };
 

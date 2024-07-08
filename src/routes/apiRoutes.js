@@ -1,15 +1,18 @@
 const express = require('express');
-const { getUser, getAllUsers, deleteUser, updateUser } = require('../controllers/user/index');
-const verifyToken = require('../middleware/auth');
+const { deleteUser } = require('../controllers/deleteController');
+const { getUser, getAllUsers } = require('../controllers/getUserController');
+const { updateUser } = require('../controllers/updateUserController');
+const { authenticateToken } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/get/:id', verifyToken, getUser);
-router.get('/getAll', verifyToken, getAllUsers);
-router.put('/update/:id', verifyToken, updateUser);
-router.delete('/delete/:id', verifyToken, deleteUser);
-router.get('/protected', verifyToken, (req, res) => {
-    res.status(200).json({ message: 'Access granted', user: req.user });
+router.delete('/user/:userId', authenticateToken, deleteUser);
+router.get('/user/:userId', authenticateToken, getUser);
+router.get('/users', authenticateToken, getAllUsers);
+router.put('/user/:userId', authenticateToken, updateUser);
+
+router.get('/protected', authenticateToken, (req, res) => {
+    res.status(200).json({ message: 'This is a protected route' });
 });
 
 module.exports = router;

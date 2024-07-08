@@ -3,6 +3,7 @@
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "celebrate": "^15.0.3",
+    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-joi-validation": "^5.0.1",
@@ -20,6 +21,5 @@
   "scripts": {
     "sync": "node src/config/syncModels.js",
     "start": "nodemon app.js"
-}
-
+  }
 }

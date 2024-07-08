@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./src/routes/authRoutes');
 const apiRoutes = require('./src/routes/apiRoutes');
 const logger = require('./src/utils/logger');
+const sequelize = require('./src/config/database'); 
 
 const app = express();
 const port = process.env.PORT || 3000;

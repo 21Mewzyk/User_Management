@@ -7,28 +7,28 @@ const updateUser = async (req, res) => {
     const { userId } = req.params;
     const { username, password, firstName, lastName, address, occupation, birthdate, maritalStatus, sex, email } = req.body;
     try {
-        const userAuth = await UserAuthentication.findByPk(userId);
-        const userData = await UserData.findByPk(userId);
+        const [userAuth, userData] = await Promise.all([
+            UserAuthentication.findByPk(userId),
+            UserData.findByPk(userId)
+        ]);
 
-        if (userAuth && userData) {
-            if (username) userAuth.username = username;
-            if (password) userAuth.password = await bcrypt.hash(password, 10);
-            if (firstName) userData.firstName = firstName;
-            if (lastName) userData.lastName = lastName;
-            if (address) userData.address = address;
-            if (occupation) userData.occupation = occupation;
-            if (birthdate) userData.birthdate = birthdate;
-            if (maritalStatus) userData.maritalStatus = maritalStatus;
-            if (sex) userData.sex = sex;
-            if (email) userData.email = email;
-
-            await userAuth.save();
-            await userData.save();
-
-            res.status(200).json({ message: 'User updated successfully', userAuth, userData });
-        } else {
-            res.status(404).json({ message: 'User not found' });
+        if (!userAuth || !userData) {
+            return res.status(404).json({ message: 'User not found' });
         }
+
+        const updateFields = async (model, fields) => {
+            for (const [key, value] of Object.entries(fields)) {
+                if (value) model[key] = key === 'password' ? await bcrypt.hash(value, 10) : value;
+            }
+            await model.save();
+        };
+
+        await Promise.all([
+            updateFields(userAuth, { username, password }),
+            updateFields(userData, { firstName, lastName, address, occupation, birthdate, maritalStatus, sex, email })
+        ]);
+
+        res.status(200).json({ message: 'User updated successfully', userAuth, userData });
     } catch (error) {
         console.error('Error updating user:', error);
         res.status(500).json({ message: 'Internal server error' });

@@ -2,7 +2,6 @@ const UserAuthentication = require('../models/userAuthentication');
 const UserData = require('../models/userData');
 const bcrypt = require('bcrypt');
 
-// Update User Authentication and Data
 const updateUser = async (req, res) => {
     const { userId } = req.params;
     const { username, password, firstName, lastName, address, occupation, birthdate, maritalStatus, sex, email } = req.body;

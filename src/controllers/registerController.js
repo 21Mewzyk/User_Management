@@ -1,16 +1,15 @@
 const bcrypt = require('bcrypt');
 const UserAuthentication = require('../models/userAuthentication');
 const UserData = require('../models/userData');
+const { userSchema } = require('../validation/schemas');
 
-// Register User Authentication and Data
 const registerUser = async (req, res) => {
     const { id, username, password, firstName, lastName, address, occupation, birthdate, maritalStatus, sex, email } = req.body;
-    
+
     try {
-    
         const existingUserAuth = await UserAuthentication.findOne({ where: { id } });
         const existingUsername = await UserAuthentication.findOne({ where: { username } });
-        
+
         if (existingUserAuth || existingUsername) {
             return res.status(400).json({ message: 'User exists already' });
         }

@@ -3,8 +3,9 @@ const jwt = require('jsonwebtoken');
 const { format } = require('date-fns');
 const UserAuthentication = require('../models/userAuthentication');
 const UserData = require('../models/userData');
+const { loginSchema } = require('../validation/schemas'); 
+const validate = require('../middleware/validate'); 
 
-// User Login
 const loginUser = async (req, res) => {
     const { username, password } = req.body;
     try {

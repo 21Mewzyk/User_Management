@@ -12,7 +12,6 @@ router.delete('/user/:userId', authenticateToken, deleteUser);
 router.get('/user/:userId', authenticateToken, getUser);
 router.get('/users', authenticateToken, getAllUsers);
 router.put('/user/:userId', authenticateToken, updateUser);
-
 router.get('/protected', authenticateToken, async (req, res) => {
     try {
         const user = await UserData.findOne({ where: { id: req.user.userId } });
@@ -29,7 +28,7 @@ router.get('/protected', authenticateToken, async (req, res) => {
                 email: user.email
             });
         } else {
-            res.status(404).json({ message: 'User not found' });
+            res.status(404).json({ message: 'User was not found' });
         }
     } catch (error) {
         console.error('Error fetching user data:', error);

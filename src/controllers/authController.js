@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { format } = require('date-fns');
 const UserAuthentication = require('../models/userAuthentication');

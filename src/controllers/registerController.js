@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const UserAuthentication = require('../models/userAuthentication');
 const UserData = require('../models/userData');
 const { userSchema } = require('../validation/schemas');

@@ -1,6 +1,6 @@
 const UserAuthentication = require('../models/userAuthentication');
 const UserData = require('../models/userData');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const updateUser = async (req, res) => {
     const { userId } = req.params;

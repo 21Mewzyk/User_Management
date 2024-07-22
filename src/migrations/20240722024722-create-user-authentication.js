@@ -5,7 +5,7 @@ module.exports = {
         id: {
           allowNull: false,
           primaryKey: true,
-          type: Sequelize.STRING, // Use STRING to match the model definition
+          type: Sequelize.STRING,
         },
         username: {
           type: Sequelize.STRING,
